@@ -1,0 +1,873 @@
+import random
+import operator as op
+from wsgiref import validate
+
+"""
+trying to make poker
+what I have to do:
+make a card deck
+make the card deck in a random order
+implement money
+make the rounds
+calculate who wins
+make a bot who plays poker
+the bot needs to make right bets: chance of winning to bet
+"""
+
+#step 1: make a deck of cards
+#four diffrent types: hearts, diamonds, spades, clubs
+HA="ace of hearts"
+H2="2 of hearts"
+H3="3 of hearts"
+H4="4 of hearts"
+H5="5 of hearts"
+H6="6 of hearts"
+H7="7 of hearts"
+H8="8 of hearts"
+H9="9 of hearts"
+H10="10 of hearts"
+HJ="jack of hearts"
+HQ="queen of hearts"
+HK="king of hearts"
+
+
+DA="ace of diamonds"
+D2="2 of diamonds"
+D3="3 of diamonds"
+D4="4 of diamonds"
+D5="5 of diamonds"
+D6="6 of diamonds"
+D7="7 of diamonds"
+D8="8 of diamonds"
+D9="9 of diamonds"
+D10="10 of diamonds"
+DJ="jack of diamonds"
+DQ="queen of diamonds"
+DK="king of diamonds"
+
+
+SA="ace of spades"
+S2="2 of spades"
+S3="3 of spades"
+S4="4 of spades"
+S5="5 of spades"
+S6="6 of spades"
+S7="7 of spades"
+S8="8 of spades"
+S9="9 of spades"
+S10="10 of spades"
+SJ="jack of spades"
+SQ="queen of spades"
+SK="king of spades"
+
+
+CA="ace of clubs"
+C2="2 of clubs"
+C3="3 of clubs"
+C4="4 of clubs"
+C5="5 of clubs"
+C6="6 of clubs"
+C7="7 of clubs"
+C8="8 of clubs"
+C9="9 of clubs"
+C10="10 of clubs"
+CJ="jack of clubs"
+CQ="queen of clubs"
+CK="king of clubs"
+
+hearts = [HA,H2,H3,H4,H5,H6,H7,H8,H9,H10,HJ,HQ,HK]
+diamonds = [DA,D2,D3,D4,D5,D6,D7,D8,D9,D10,DJ,DQ,DK]
+spades = [SA,S2,S3,S4,S5,S6,S7,S8,S9,S10,SJ,SQ,SK]
+clubs = [CA,C2,C3,C4,C5,C6,C7,C8,C9,C10,CJ,CQ,CK]
+
+ace=[HA,DA,SA,CA]
+two=[H2,D2,S2,C2]
+three=[H3,D3,S3,C3]
+four=[H4,D4,S4,C4]
+five=[H5,D5,S5,C5]
+six=[H6,D6,S6,C6]
+seven=[H7,D7,S7,C7]
+eight=[H8,D8,S8,C8]
+nine=[H9,D9,S9,C9]
+ten=[H10,D10,S10,C10]
+jack=[HJ,DJ,SJ,CJ]
+queen=[HQ,DQ,SQ,CQ]
+king=[HK,DK,SK,CK]
+
+#step 2: randomize the deck
+
+Card_Deck = [HA,H2,H3,H4,H5,H6,H7,H8,H9,H10,HJ,HQ,HK,DA,DA,D2,D3,D4,D5,D6,D7,D8,D9,D10,DJ,DQ,DK,SA,S2,S3,S4,S5,S6,S7,S8,S9,S10,SJ,SQ,SK,CA,C2,C3,C4,C5,C6,C7,C8,C9,C10,CJ,CQ,CK]
+
+
+#step 3: implement the money
+Player_money = 1000
+Computer_money = 1000
+Pot = 0
+#step 4: making the rounds
+
+#start round 1
+
+#making the player hand
+
+
+
+
+PH1 = random.choice(Card_Deck)
+Card_Deck.remove(PH1)
+PH2 = random.choice(Card_Deck)
+Card_Deck.remove(PH2)
+print("Your hand is:")
+print(PH1 + " and " + PH2)
+print()
+
+
+
+#making the computer hand
+CH1 = random.choice(Card_Deck)
+Card_Deck.remove(CH1)
+CH2 = random.choice(Card_Deck)
+Card_Deck.remove(CH2)
+CH = [CH1,CH2]
+
+#computer calculations  after hand
+pair = False
+if all(item in ace for item in CH):
+    pair = True
+
+if all(item in two for item in CH):
+    pair = True
+
+if all(item in three for item in CH):
+    pair = True
+
+if all(item in four for item in CH):
+    pair = True
+
+if all(item in five for item in CH):
+    pair = True
+
+if all(item in six for item in CH):
+    pair = True
+
+if all(item in seven for item in CH):
+    pair = True
+
+if all(item in eight for item in CH):
+    pair = True
+
+if all(item in nine for item in CH):
+    pair = True
+
+if all(item in ten for item in CH):
+    pair = True
+
+if all(item in jack for item in CH):
+    pair = True
+
+if all(item in queen for item in CH):
+    pair = True
+
+if all(item in king for item in CH):
+    pair = True
+
+#after this the computer knows if ITS HAND is a pair
+
+#now the bets
+#has to be a minimum of 10
+print("You got your hand, now place your bet")
+print()
+print("Your money: " + str(Player_money))
+print()
+PBET = int(input("Your bet: "))
+print()
+if PBET < 10:
+    print("MINIMUM IS TEN")
+    PBET = int(input("Your bet: "))
+    if PBET < 10:
+        print("If you don't wanna follow the rules, then don't play")
+
+if PBET > Player_money:
+    print("NOT ENOUGH MONEY")
+    PBET = int(input("Your bet: "))
+    if PBET < 10:
+        print("If you don't wanna follow the rules, then don't play")
+
+Player_money = Player_money - PBET
+Pot = Pot + PBET
+print("Pot is: " + str(Pot))
+
+#computer bet will be implemented later
+#I will also make ascii cards if the program is finished
+#first three cards on the table
+print()
+print("The first three cards will be dealed")
+print()
+TC1 = random.choice(Card_Deck)
+Card_Deck.remove(TC1)
+TC2 = random.choice(Card_Deck)
+Card_Deck.remove(TC2)
+TC3 = random.choice(Card_Deck)
+Card_Deck.remove(TC3)
+
+print("TABLE:")
+print("1: " + TC1)
+print("2: " + TC2)
+print("3: " + TC3)
+
+print()
+print("place your bets now!")
+print()
+print("Your money: " + str(Player_money))
+print("Your hand: " + PH1 + " and " + PH2)
+print()
+PBET = int(input("Your bet: "))
+print()
+
+if PBET < 10:
+    print("BET TOO LOW")
+    PBET = int(input("Your bet: "))
+    if PBET < 10:
+        print("If you don't wanna follow the rules, then don't play")
+
+if PBET > Player_money:
+    print("NOT ENOUGH MONEY")
+    PBET = int(input("Your bet: "))
+    if PBET < 10:
+        print("If you don't wanna follow the rules, then don't play")
+
+Player_money = Player_money - PBET
+Pot = Pot + PBET
+print("Pot is: " + str(Pot))
+print()
+#fourth card
+
+print("The fourth card is coming")
+print()
+
+TC4 = random.choice(Card_Deck)
+Card_Deck.remove(TC4)
+print("TABLE:")
+print("1: " + TC1)
+print("2: " + TC2)
+print("3: " + TC3)
+print("4: " + TC4)
+
+print()
+print("place your bets now!")
+print()
+print("Your money: " + str(Player_money))
+print("Your hand: " + PH1 + " and " + PH2)
+PBET = int(input("Your bet: "))
+print("")
+
+if PBET < 10:
+    print("BET TOO LOW")
+    PBET = int(input("Your bet: "))
+    if PBET < 10:
+        print("If you don't wanna follow the rules, then don't play")
+
+if PBET > Player_money:
+    print("NOT ENOUGH MONEY")
+    PBET = int(input("Your bet: "))
+    if PBET < 10:
+        print("If you don't wanna follow the rules, then don't play")
+
+Player_money = Player_money - PBET
+Pot = Pot + PBET
+print("Pot is: " + str(Pot))
+
+#fifth card
+
+TC5 = random.choice(Card_Deck)
+Card_Deck.remove(TC5)
+print()
+print("Here comes the fifth card")
+print()
+print("TABLE:")
+print("1: " + TC1)
+print("2: " + TC2)
+print("3: " + TC3)
+print("4: " + TC4)
+print("5: " + TC5)
+
+print()
+print("place your bets now!")
+print("Your money: " + str(Player_money))
+print("Your hand: " + PH1 + " and " + PH2)
+PBET = int(input("Your bet: "))
+print("")
+
+if PBET < 10:
+    print("BET TOO LOW")
+    PBET = int(input("Your bet: "))
+    if PBET < 10:       
+        print("If you don't wanna follow the rules, then don't play")
+
+if PBET > Player_money:
+    print("NOT ENOUGH MONEY")
+    PBET = int(input("Your bet: "))
+    if PBET < 10:
+        print("If you don't wanna follow the rules, then don't play")
+
+Player_money = Player_money - PBET
+Pot = Pot + PBET
+print("Pot is: " + str(Pot))
+
+#determine the winner
+
+#need to check on order
+
+#how will I do it?
+#make list of things as: same color, same number and then check for multiple in a list
+#also, lowest has to go first, otherwise points can decrease
+PC = [PH1,PH2,TC1,TC2,TC3,TC4,TC5]
+CC = [CH1,CH2,TC1,TC2,TC3,TC4,TC5]
+
+Player_points=0
+Computer_points=0
+
+#What I will do: give every combination a diffrent point, so if you both have a pair the highest pair will win
+
+#check for highest card
+if any(item in PC for item in two):
+ Player_points = 1
+
+if any(item in PC for item in three):
+ Player_points = 2
+
+if any(item in PC for item in four):
+ Player_points = 3
+
+if any(item in PC for item in five):
+ Player_points = 4
+
+if any(item in PC for item in six):
+ Player_points = 5
+
+if any(item in PC for item in seven):
+ Player_points = 6
+
+if any(item in PC for item in eight):
+ Player_points = 7
+
+if any(item in PC for item in nine):
+ Player_points = 8
+
+if any(item in PC for item in ten):
+ Player_points = 9
+
+if any(item in PC for item in jack):
+ Player_points = 10
+
+if any(item in PC for item in queen):
+ Player_points = 11
+
+if any(item in PC for item in king):
+ Player_points = 12
+
+if any(item in PC for item in ace):
+ Player_points = 13
+
+#Computer check for highest card
+if any(item in CC for item in two):
+ Computer_points = 1
+
+if any(item in CC for item in three):
+ Computer_points = 2
+
+if any(item in CC for item in four):
+ Computer_points = 3
+
+if any(item in CC for item in five):
+ Computer_points = 4
+
+if any(item in CC for item in six):
+ Computer_points = 5
+
+if any(item in CC for item in seven):
+ Computer_points = 6
+
+if any(item in CC for item in eight):
+ Computer_points = 7
+
+if any(item in CC for item in nine):
+ Computer_points = 8
+
+if any(item in CC for item in ten):
+ Computer_points = 9
+
+if any(item in CC for item in jack):
+ Computer_points = 10
+
+if any(item in CC for item in queen):
+ Computer_points = 11
+
+if any(item in CC for item in king):
+ Computer_points = 12
+
+if any(item in CC for item in ace):
+ Computer_points = 13
+ 
+
+#check for pair
+pair = []
+
+
+pair=(set(PC).intersection(two))
+if len(pair) == 2:
+
+ Player_points = 14
+
+pair=(set(PC).intersection(three))
+if len(pair) == 2:
+
+ Player_points = 15
+
+pair=(set(PC).intersection(four))
+if len(pair) == 2:
+
+ Player_points = 16
+
+pair=(set(PC).intersection(five))
+if len(pair) == 2:
+
+ Player_points = 17
+
+
+pair=(set(PC).intersection(six))
+if len(pair) == 2:
+
+ Player_points = 18
+
+
+pair=(set(PC).intersection(seven))
+if len(pair) == 2:
+
+ Player_points = 19
+
+
+pair=(set(PC).intersection(eight))
+if len(pair) == 2:
+
+ Player_points = 20
+
+pair=(set(PC).intersection(nine))
+if len(pair) == 2:
+
+ Player_points = 21
+
+
+pair=(set(PC).intersection(ten))
+if len(pair) == 2:
+
+ Player_points = 22
+
+
+pair=(set(PC).intersection(jack))
+if len(pair) == 2:
+
+ Player_points = 23
+
+
+pair=(set(PC).intersection(queen))
+if len(pair) == 2:
+
+ Player_points = 24
+
+pair=(set(PC).intersection(king))
+if len(pair) == 2:
+
+ Player_points = 25
+
+pair=(set(PC).intersection(ace))
+if len(pair) == 2:
+
+ Player_points = 26
+
+
+#computer check for pair DONE
+
+
+pair=(set(CC).intersection(two))
+if len(pair) == 2:
+
+ Computer_points = 14
+pair=(set(CC).intersection(three))
+if len(pair) == 2:
+
+ Computer_points = 15
+
+pair=(set(CC).intersection(four))
+if len(pair) == 2:
+
+ Computer_points = 16
+
+pair=(set(CC).intersection(five))
+if len(pair) == 2:
+
+ Computer_points = 17
+
+
+pair=(set(CC).intersection(six))
+if len(pair) == 2:
+
+ Computer_points = 18
+
+
+pair=(set(CC).intersection(seven))
+if len(pair) == 2:
+
+ Computer_points = 19
+
+
+pair=(set(CC).intersection(eight))
+if len(pair) == 2:
+
+ Computer_points = 20
+
+pair=(set(CC).intersection(nine))
+if len(pair) == 2:
+
+ Computer_points = 21
+
+
+pair=(set(CC).intersection(ten))
+if len(pair) == 2:
+
+ Computer_points = 22
+
+
+pair=(set(CC).intersection(jack))
+if len(pair) == 2:
+
+ Computer_points = 23
+
+
+pair=(set(CC).intersection(queen))
+if len(pair) == 2:
+
+ Computer_points = 24
+
+pair=(set(CC).intersection(king))
+if len(pair) == 2:
+
+ Computer_points = 25
+
+pair=(set(CC).intersection(ace))
+if len(pair) == 2:
+
+ Computer_points = 26
+
+#check for two pair
+#how do I check if a player/compter has 2 pair???
+#like this: 2pair=(set(PC).intersection(two, three or four or five or six...))
+#no, this is tested and won't work
+
+#check for three of a kind
+three_of_a_kind = []
+three_of_a_kind=(set(PC).intersection(ace))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+three_of_a_kind=(set(PC).intersection(two))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+three_of_a_kind=(set(PC).intersection(three))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+three_of_a_kind=(set(PC).intersection(four))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+three_of_a_kind=(set(PC).intersection(five))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+
+three_of_a_kind=(set(PC).intersection(six))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+three_of_a_kind = []
+three_of_a_kind=(set(PC).intersection(seven))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+
+three_of_a_kind=(set(PC).intersection(eight))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+three_of_a_kind=(set(PC).intersection(nine))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+
+three_of_a_kind=(set(PC).intersection(ten))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+
+three_of_a_kind=(set(PC).intersection(jack))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+
+three_of_a_kind=(set(PC).intersection(queen))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+three_of_a_kind=(set(PC).intersection(king))
+if len(three_of_a_kind) == 3:
+
+ Player_points = 4
+
+
+#computer check for three of a kind DONE
+three_of_a_kind=(set(CC).intersection(ace))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+
+three_of_a_kind=(set(CC).intersection(two))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+three_of_a_kind=(set(CC).intersection(three))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+
+three_of_a_kind=(set(CC).intersection(four))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+
+three_of_a_kind=(set(CC).intersection(five))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+
+
+three_of_a_kind=(set(CC).intersection(six))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+
+three_of_a_kind = []
+three_of_a_kind=(set(CC).intersection(seven))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+
+
+three_of_a_kind=(set(CC).intersection(eight))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+
+three_of_a_kind=(set(CC).intersection(nine))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+
+
+three_of_a_kind=(set(CC).intersection(ten))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+
+
+three_of_a_kind=(set(CC).intersection(jack))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+
+
+three_of_a_kind=(set(CC).intersection(queen))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+
+three_of_a_kind=(set(CC).intersection(king))
+if len(three_of_a_kind) == 3:
+
+ Computer_points = 4
+
+#check for straight
+
+#check for flush
+
+#check for full house
+
+#check for four of a kind DONE
+four_of_a_kind = []
+four_of_a_kind = (set(PC).intersection(ace))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+four_of_a_kind=(set(PC).intersection(two))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+four_of_a_kind=(set(PC).intersection(three))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+four_of_a_kind=(set(PC).intersection(four))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+four_of_a_kind=(set(PC).intersection(five))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+
+four_of_a_kind=(set(PC).intersection(six))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+four_of_a_kind = []
+four_of_a_kind=(set(PC).intersection(seven))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+
+four_of_a_kind=(set(PC).intersection(eight))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+four_of_a_kind=(set(PC).intersection(nine))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+
+four_of_a_kind=(set(PC).intersection(ten))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+
+four_of_a_kind=(set(PC).intersection(jack))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+
+four_of_a_kind=(set(PC).intersection(queen))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+four_of_a_kind=(set(PC).intersection(king))
+if len(four_of_a_kind) == 4:
+
+ Player_points = 8
+
+
+#computer check for four of a kind DONE
+four_of_a_kind=(set(CC).intersection(ace))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+
+four_of_a_kind=(set(CC).intersection(two))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+four_of_a_kind=(set(CC).intersection(three))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+
+four_of_a_kind=(set(CC).intersection(four))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+
+four_of_a_kind=(set(CC).intersection(five))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+
+
+four_of_a_kind=(set(CC).intersection(six))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+
+four_of_a_kind = []
+four_of_a_kind=(set(CC).intersection(seven))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+
+
+four_of_a_kind=(set(CC).intersection(eight))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+
+four_of_a_kind=(set(CC).intersection(nine))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+
+
+four_of_a_kind=(set(CC).intersection(ten))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+
+
+four_of_a_kind=(set(CC).intersection(jack))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+
+
+four_of_a_kind=(set(CC).intersection(queen))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+
+four_of_a_kind=(set(CC).intersection(king))
+if len(four_of_a_kind) == 4:
+
+ Computer_points = 8
+
+#check for straight flush
+
+#check for royal flush
+
+
+#I will give a number if they have it, highest number wins
+
+if Player_points > Computer_points:
+    Player_money = Player_money + Pot
+    print("You won")
+print("ROUND DONE")
+Pot = 0
